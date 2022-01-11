@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-30 22:42:55
- * @LastEditTime: 2021-12-31 12:54:20
+ * @LastEditTime: 2022-01-07 00:08:01
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /jira/src/screens/project-list/index.jsx
@@ -12,6 +12,7 @@ import { List} from './list';
 import { useState, useEffect } from 'react'
 import { cleanObject, useMount, useDebounce } from '../../utils/index'
 import * as qs from 'qs'
+import { useHttp } from '../../utils/http';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectList = ()=> {
@@ -22,21 +23,14 @@ export const ProjectList = ()=> {
   const [list, setList] = useState([])
   const [users, setUsers] = useState([])
   const debounceParam = useDebounce(param, 2000)
+  const client = useHttp();
 
   useEffect(() => {
-    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`).then(async response=> {
-      if(response.ok) {
-        setList(await response.json())
-      }
-    })
+    client('projects', {data: cleanObject(debounceParam)}).then(setList)
   }, [debounceParam])
 
   useMount(() => {
-    fetch(`${apiUrl}/users`).then(async response=> {
-      if(response.ok) {
-        setUsers(await response.json())
-      }
-    })
+    client('users').then(setUsers);
   })
   return <div>
     <Search users={users} param={param} setParam={setParam}/>

@@ -1,11 +1,12 @@
 /*
  * @Author: your name
  * @Date: 2021-12-30 22:44:49
- * @LastEditTime: 2022-01-05 12:46:23
- * @LastEditors: your name
+ * @LastEditTime: 2022-01-11 00:16:31
+ * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /jira/src/screens/project-list/search.tsx
  */
+import { Input, Select } from 'antd';
 import React from 'react';
 
 export interface User {
@@ -29,23 +30,23 @@ interface Search {
 export const Search = ({users, param, setParam}: Search)=> {
   return <form action="">
     <div>
-      <input type="text" value={param.name} onChange={evt=> {setParam({
+      <Input type="text" value={param.name} onChange={evt=> {setParam({
           ...param,
           name: evt.target.value
         })
       }} />
-      <select value={param.personId} onChange={evt=> {setParam({
+      <Select value={param.personId} onChange={value=> {setParam({
           ...param,
-          personId: evt.target.value
+          personId: value
         })
       }} >
-        <option value={''}>负责人</option>
+        <Select.Option value={''}>负责人</Select.Option>
         {
           users.map((user)=> {
-            return <option value={user.id} key={user.id}>{user.name}</option>
+            return <Select.Option value={user.id} key={user.id}>{user.name}</Select.Option>
           })
         }
-      </select>
+      </Select>
     </div>
   </form>
 }
