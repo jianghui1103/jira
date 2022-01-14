@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-06 08:32:03
- * @LastEditTime: 2022-01-11 23:59:11
+ * @LastEditTime: 2022-01-12 14:32:48
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /jira/src/authenticated-app.tsx
@@ -11,26 +11,33 @@ import React from "react"
 import { Row } from "./components/lib";
 import { useAuth } from "./context/auth-context"
 import { ProjectList } from './screens/project-list'
+import logo from './assets/logo.png'
+import { Dropdown, Menu } from "antd";
 
 export const AuthenticatedApp = ()=> {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return <Container>
     <Header>
       <HeaderLeft gap={2} >
-        <h2>logo</h2>
-        <h2>项目</h2>
-        <h2>用户</h2>
+        <img src={logo} alt="" style={{width: '4rem'}}/>
+        <HeaderItem>项目</HeaderItem>
+        <HeaderItem>用户</HeaderItem>
       </HeaderLeft>
       <HeaderRight>
-        <button onClick={logout}>登出</button>
+        <Dropdown overlay={
+          <Menu>
+            <Menu.Item key={'logout'}>
+              <a onMouseEnter={logout} href="/#">登出</a>
+            </Menu.Item>
+          </Menu>
+        }>
+          <a onClick={e=> e.preventDefault()} href="/#">Hi, {user?.name}</a>
+        </Dropdown>
       </HeaderRight>
     </Header>
-    <Nav>nav</Nav>
     <Main>
       <ProjectList/>
     </Main>
-    <Aside>aside</Aside>
-    <Footer>footer</Footer>
   </Container>
 }
 
@@ -39,40 +46,21 @@ const HeaderItem = styled.h3`
 `
 
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: 6rem 1fr auto;
-  grid-template-columns: 20rem 1fr 20rem;
-  grid-template-areas: 
-  "header header header"
-  "nav main aside"
-  "footer footer footer"
-  ;
   height: 100vh;
   grid-gap: 10rem;
 `
 
 // grid-area 用来给grid子元素起名字
 const Header = styled(Row)`
-  grid-area: header;
   justify-content: space-between;
+  padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
 `
 
 const HeaderLeft = styled(Row)``;
 
 const HeaderRight = styled.div``;
 
-
 const Main = styled.main`
   grid-area: main;
-`
-const Nav = styled.nav`
-  grid-area: nav;
-`
-
-const Aside = styled.aside`
-  grid-area: aside;
-`
-
-const Footer = styled.footer`
-  grid-area: footer;
 `
