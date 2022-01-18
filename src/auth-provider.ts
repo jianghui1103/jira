@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2022-01-05 12:41:49
- * @LastEditTime: 2022-01-05 23:37:47
+ * @LastEditTime: 2022-01-14 23:25:15
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /jira/src/auth-provider.ts
@@ -28,7 +28,7 @@ export const login = (data: {username: string, password: string})=> {
     if(response.ok) {
       return handleUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   })
 }
@@ -44,7 +44,7 @@ export const register = (data: {username: string, password: string})=> {
     if(response.ok) {
       return handleUserResponse(await response.json());
     } else {
-      return Promise.reject(data);
+      return Promise.reject(await response.json());
     }
   })
 }
