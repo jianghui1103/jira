@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-12-31 00:41:55
- * @LastEditTime: 2022-01-19 13:03:19
+ * @LastEditTime: 2022-01-19 13:06:17
  * @LastEditors: Please set LastEditors
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: /jira/src/utils/index.ts
@@ -54,7 +54,7 @@ export const useDebounce = <V>(value: V, delay?: number)=> {
   return debouncedValue
 }
 
-export const useDocumentTitle = (title: string, keepOnmount?: Boolean = true)=> {
+export const useDocumentTitle = (title: string, keepOnmount: Boolean = true)=> {
   const oldTitle = document.title;
   useEffect(()=> {
     document.title = title
